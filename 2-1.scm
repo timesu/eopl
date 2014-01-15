@@ -17,6 +17,8 @@
 
 (define successor
   (lambda (x)
+    (display successor)
+    (newline)
     (cond
      ((null? x) 
       (cons 1 x))
@@ -29,57 +31,46 @@
      (else
       (cons (+ 1 (car x)) (cdr x))))))
 
-(successor '(1))
-(successor '(15 9 8 7 8 2))
-;(successor '(15))
-(successor '(15 15 2))
-
 (define predecessor
   (lambda (x)
+    (display predecessor)
+    (newline)
     (cond
      ((null? x)
       '())
      ((eq? (car x) 0)
-      (cond
-       ((null? (cdr x))
-	 '())
-       (else
-	(cons (- base 1) (predecessor (cdr x))))))
+      (display x)
+      (newline)
+      (display "car is 0")
+      (newline)
+      (cond ((null? (cdr x)) '())
+       (else (cons (- base 1) (predecessor (cdr x))))))
+     (display "test")
      ((eq? (car x) 1)
-      (cond
-       ((null? (cdr x))
-	'())))
-      (else
-	(cons (- (car x) 1) (cdr x))))))
-
-(predecessor '())
-(predecessor '(0))
-(predecessor '(1))
-(predecessor '(0 1))
-;(predecessor '(0 2 3 4 5 ))
+      (display x)
+      (newline)
+      (display "car is 1")
+      (newline)
+      (cond ((null? (cdr x)) '())))
+      (else (cons (- (car x) 1) (cdr x))))))
 
 (define plus
   (lambda (x y)
-    (if (is-zero? x)
-	y
-	(successor (plus (predecessor x) y)))))
-
-(plus (successor zero) (successor zero))
-
-(successor zero)
-(predecessor (successor zero))
-(plus zero (successor zero))
-
+    (display plus)
+    (newline)
+    (if (is-zero? y)
+	x
+	(successor (plus x (predecessor y))))))
 
 (define mul
   (lambda (x y)
-    (cond ((is-zero? x) zero)
-          ((is-zero? y) zero)
-          ((is-zero? (predecessor x)) y)
-          (else (plus y (mul (predecessor x) y))))))
-
-(mul seven (successor (successor (successor (successor zero)))))
-
+    (display mul)
+    (newline)
+    (cond 
+     ((is-zero? x) zero)
+     ((is-zero? y) zero)
+     ((is-zero? (predecessor y)) x)
+     (else (plus x (mul x (predecessor y) ))))))
 
 (define fact
   (lambda (n)
@@ -87,11 +78,15 @@
           ((is-zero? (predecessor n)) (successor zero))
           (else (mul n (fact (predecessor n)))))))
 
-(fact (successor (successor (successor (successor zero)))))
 
-(define seven (successor (successor 
-			  (successor (successor (successor 
-						 (successor (successor zero))))))))
-(successor (successor seven))
-(fact seven)
-
+(predecessor '(1))
+(mul '(8) '(9))
+(plus '(2 1) '(9))
+(predecessor '(0 1))
+(successor '(11 2))
+(mul '(15 12) '(2))
+(mul 0 1)
+(fact '(1))
+(fact '(4))
+(fact '(5))
+(time (fact '(7)))
