@@ -65,6 +65,7 @@
           (extend-env 'y 14
             (empty-env))))))
 
+
 (equal?? (apply-env e 'd) 6)
 (equal?? (apply-env e 'y) 8)
 (equal?? (apply-env e 'x) 7)
