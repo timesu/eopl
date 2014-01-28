@@ -1,0 +1,19 @@
+;;EOPL
+;;2nd version
+;;Ch3 3-1
+
+#lang eopl
+
+(define-datatype program program?
+  (a-program
+   (exp expression?)))
+
+(define-datatype expression expression?
+  (lit-exp (datum number?))
+  (var-exp (id symbol?))
+  (primapp-exp (prim primitive?))
+  (rands (list-of expression?)))
+
+(define-datatype primitive primitive?
+  (add-prim) (substract-prim)
+  (mult-prim) (incr-prim) (decr-prim))

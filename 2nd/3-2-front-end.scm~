@@ -1,0 +1,60 @@
+;;EOPL
+;;2nd
+;;CH3 3.2 The Front END
+
+#lang eopl
+(require "2nd/3-1.scm")
+
+(define scanner-spec-3-1
+  '((white-sp (whitespace) skip)
+    (comment 
+     ("%" (arbno (not #\newline))) 
+     skip
+     )
+    (identifier
+     (letter (arbno (or letter digit "?"))) 
+     symbol
+     )
+    (number (digit (arbno digit)) number))
+  )
+
+(define grammar-3-1 
+  '((program (expression) a-program)
+    (expression (number) lit-exp)
+    (expression (identifier) var-exp)
+    (expression (primitive 
+		 "(" (separated-list expression ",") ")")
+		primapp-exp) 
+    (primitive ("+") add-prim)
+    (primitive ("-") subtract-prim)
+    (primitive ("*") mult-prim)
+    (primitive ("add1") incr-prim)
+    (primitive ("sub1") decr-prim))
+  )
+
+(define scan&parse 
+  (sllgen:make-string-parser
+   scanner-spec-3-1 grammar-3-1))
+
+(sllgen:make-define-datatypes scanner-spec-3-1 grammar-3-1)
+
+(define run
+  (lambda (string)
+    (eval-program
+     (scan&parse string))))
+
+(scan&parse "add1(2)")
+(program-to-list (scan&parse "add1(2)"))
+
+(a-program 
+ (primapp-exp 
+  (incr-prim) 
+  ((lit-exp 2))))
+
+(define read-eval-print
+  (sllgen:make-rep-loop "-->"
+			eval-program
+			(sllgen:make-stream-parser
+			 scanner-spec-3-1 grammar-3-1)))
+
+()
