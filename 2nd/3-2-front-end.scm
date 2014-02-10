@@ -3,7 +3,7 @@
 ;;CH3 3.2 The Front END
 
 #lang eopl
-(require "3-1.scm")
+;(require "3-1.scm")
 
 (define scanner-spec-3-1
   '((white-sp (whitespace) skip)
@@ -44,17 +44,11 @@
      (scan&parse string))))
 
 (scan&parse "add1(2)")
-(program-to-list (scan&parse "add1(2)"))
+;(program-to-list (scan&parse "add1(2)"))
 
-(a-program 
- (primapp-exp 
-  (incr-prim) 
-  ((lit-exp 2))))
-
-(define read-eval-print
-  (sllgen:make-rep-loop "-->"
-			eval-program
-			(sllgen:make-stream-parser
-			 scanner-spec-3-1 grammar-3-1)))
-
-()
+(define read-eval-print 
+  (sllgen:make-rep-loop 
+   "--> " 
+   eval-program
+   (sllgen:make-stream-parser 
+    scanner-spec-3-1 grammar-3-1)))
