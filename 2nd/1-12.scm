@@ -5,6 +5,10 @@
 ;;using map .
 ;;Write subst following the original grammar by using map .
 
+
+;;Key word: Kleene star -> map
+;;See exercise 1-12 and 1-13
+
 ;;subst
 ;;kleene star
 ;;<s-list> ::= ({<symbol-expression>}*)

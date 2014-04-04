@@ -40,5 +40,20 @@
 ;;<top-level> ::= <s-list>
 ;;<s-list> ::=({symbol-expression}*)
 ;;<symbol-expression> ::= <symbol> | <s-list>
+;;From https://github.com/rubenbarroso/EOPL/blob/master/src/chapter1/1_13.scm
+(define notate-depth-map
+  (lambda (slist)
+    (notate-depth-in-s-list-map slist 0)))
 
+(define notate-depth-in-s-list-map
+  (lambda (slist d)
+  (map (lambda (se)
+         (notate-depth-in-symbol-expression-map se d))
+       slist)))
+
+(define notate-depth-in-symbol-expression-map
+  (lambda (se d)
+    (if (symbol? se)
+      (list se d)
+      (notate-depth-in-s-list-map se (+ d 1)))))
 
